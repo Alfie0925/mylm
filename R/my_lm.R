@@ -29,9 +29,7 @@ my_lm = function(formula, data) {
   }
 
   # solve normal equations (X^T X beta = X^T y)
-  XtX = crossprod(X)
-  Xty = crossprod(X, y)
-  beta_hat = drop(solve(XtX, Xty))
+  beta_hat = cpp_ols_normal_eq(X, y)
 
   # add names to coefficients
   names(beta_hat) = colnames(X)
