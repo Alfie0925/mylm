@@ -9,9 +9,7 @@ This package is developed as part of **Biostat 625 Homework 4**.
 # Features
 
 - Fit linear regression models using the normal equations  
-  \[
-  \hat\beta = (X^T X)^{-1} X^T y
-  \]
+  $\hat{\beta} = (X^T X)^{-1} X^T y$
 - Accepts R **formula interface** (e.g., `y ~ x1 + x2`)
 - Automatically constructs the model matrix using `model.matrix()`
 - Returns:
