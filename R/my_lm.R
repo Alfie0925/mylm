@@ -17,7 +17,7 @@
 my_lm = function(formula, data) {
 
   # build model frame from formula and data
-  mf = stats::model.frame(formula = formula, data = data)
+  mf = stats::model.frame(formula = formula, data = data, na.action = NULL)
 
   # extract response and design matrix
   y = stats::model.response(mf)
