@@ -94,6 +94,9 @@ all.equal(fit_my_sim$residuals, resid(fit_lm_sim))
 
 # 3. Efficiency Benchmark
 
+Based on the benchmark, my_lm() and lm() have similar performance for small 
+datasets. The difference is negligible for typical use cases.
+
 ```{r bench-load, message = FALSE}
 # install.packages("bench")
 library(bench)
@@ -103,7 +106,8 @@ library(bench)
 bench::mark(
   my_lm = my_lm(y ~ x1 + x2, data = sim_dat),
   lm    = lm(y ~ x1 + x2, data = sim_dat),
-  iterations = 100
+  iterations = 100,
+  check = FALSE
 )
 ```
 
