@@ -6,10 +6,12 @@ This package is developed as part of **Biostat 625 Homework 4**.
 
 ---
 
-# Features
+## Features
 
 - Fit linear regression models using the normal equations  
+
   $\hat{\beta} = (X^T X)^{-1} X^T y$
+
 - Accepts R **formula interface** (e.g., `y ~ x1 + x2`)
 - Automatically constructs the model matrix using `model.matrix()`
 - Returns:
@@ -17,15 +19,17 @@ This package is developed as part of **Biostat 625 Homework 4**.
   - fitted values  
   - residuals  
   - model matrix and response  
-- Includes a basic `summary.my_lm()` method with standard errors and t-statistics  
 - Documentation generated via **roxygen2**
 
 ---
 
-# Installation
+## Limitations
 
-You can install the package directly from GitHub:
+Your current implementation has the following constraints:
+
+### Missing values (NA) are not supported
+If any NA appears in predictors or response:
 
 ```r
-# install.packages("devtools")
-devtools::install_github("Alfie0925/mylm")
+my_lm(...)
+# Error: NA values detected: my_lm() does not support missing data.
