@@ -1,3 +1,7 @@
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/Alfie0925/mylm/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Alfie0925/mylm/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 # mylm
 
 `mylm` is a lightweight R package that implements a simplified version of the
