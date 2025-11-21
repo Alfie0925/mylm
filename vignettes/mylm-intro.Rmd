@@ -8,6 +8,8 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+library(mylm)
+library(bench)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
