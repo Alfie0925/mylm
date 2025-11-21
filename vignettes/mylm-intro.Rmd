@@ -1,0 +1,123 @@
+---
+title: "Introduction to the mylm Package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mylm-intro}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Overview
+
+The **mylm** package provides a lightweight implementation of the ordinary
+least squares (OLS) linear regression estimator
+
+\[
+\hat{\beta} = (X^\top X)^{-1} X^\top y .
+\]
+
+It is intended as a simplified version of `stats::lm()`, supporting:
+
+- R formula interface  
+- automatic construction of the model matrix via `model.matrix()`  
+- coefficient estimates  
+- fitted values and residuals  
+
+The main function is `my_lm()`.  
+This vignette demonstrates basic usage, correctness checks, and performance
+comparison against `stats::lm()`.
+
+---
+
+# 1. Basic Example on `mtcars`
+
+```{r basic-fit}
+library(mylm)
+
+dat = mtcars
+fit_my = my_lm(mpg ~ wt + hp, data = dat)
+
+fit_my
+```
+
+```{r basic-coef}
+fit_my$coefficients
+```
+
+```{r basic-lm}
+fit_lm = lm(mpg ~ wt + hp, data = dat)
+coef(fit_lm)
+```
+
+---
+
+# 2. Correctness: my_lm() vs lm()
+
+## 2.1 Real-data comparison
+
+```{r compare-mtcars}
+all.equal(fit_my$coefficients, coef(fit_lm))
+all.equal(fit_my$fitted.values, fitted(fit_lm))
+all.equal(fit_my$residuals, resid(fit_lm))
+```
+
+## 2.2 Simulation study
+
+```{r sim-data}
+set.seed(1)
+n  = 200
+x1 = rnorm(n)
+x2 = rnorm(n)
+y  = 1 + 2 * x1 - 3 * x2 + rnorm(n, sd = 0.5)
+sim_dat = data.frame(y = y, x1 = x1, x2 = x2)
+```
+
+```{r sim-fit}
+fit_my_sim = my_lm(y ~ x1 + x2, data = sim_dat)
+fit_lm_sim = lm(y ~ x1 + x2, data = sim_dat)
+```
+
+```{r sim-compare}
+all.equal(fit_my_sim$coefficients, coef(fit_lm_sim))
+all.equal(fit_my_sim$fitted.values, fitted(fit_lm_sim))
+all.equal(fit_my_sim$residuals, resid(fit_lm_sim))
+```
+
+---
+
+# 3. Efficiency Benchmark
+
+```{r bench-load, message = FALSE}
+# install.packages("bench")
+library(bench)
+```
+
+```{r benchmark}
+bench::mark(
+  my_lm = my_lm(y ~ x1 + x2, data = sim_dat),
+  lm    = lm(y ~ x1 + x2, data = sim_dat),
+  iterations = 100
+)
+```
+
+---
+
+# 4. Limitations
+
+- `NA` values are not supported.  
+- `data` must be a data frame.  
+- No advanced lm() features (weights, offsets, etc.).  
+
+---
+
+# 5. Conclusion
+
+This vignette shows basic usage, correctness checks, and performance
+comparison of the `mylm` package.
