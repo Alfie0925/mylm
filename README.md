@@ -1,5 +1,6 @@
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/Alfie0925/mylm/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Alfie0925/mylm/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/Alfie0925/mylm/graph/badge.svg)](https://app.codecov.io/gh/Alfie0925/mylm)
 <!-- badges: end -->
 
 # mylm
